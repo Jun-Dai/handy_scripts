@@ -1,0 +1,20 @@
+#!/usr/bin/ruby
+
+nums = Array.new
+
+while gets
+  break if $_.nil? || $_.strip.empty?
+  
+  nums.push $_.to_f
+end
+
+nums.sort! {|a, b| a <=> b}
+
+len = nums.length
+if len % 2 == 0
+  lower = nums[len / 2]
+  upper = nums[(len / 2) + 1]
+  puts (lower + upper) / 2
+else
+  puts nums[(len + 1) / 2]
+end

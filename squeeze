@@ -1,0 +1,39 @@
+#!/bin/bash
+# default max sampling rate is 96000
+rate=96000
+rates=(44100 48000 96000 192000)
+choices=(44.1kHz 48kHz 96kHz 192kHz)
+
+# if -s argument given to script, prompt for selection from the common rates
+
+if [ "$1" == -s ]
+then echo "Type the number of the max rate to use:"
+select choice in ${choices[@]}
+do
+if [ -z $choice ]
+then
+echo try again
+else
+rate=${rates[$((REPLY-1))]}
+echo Using ${choices[$((REPLY-1))]}
+break
+fi
+done
+fi
+echo $rate
+echo "Type the number of the device to use:"
+IFS=$'\n'
+select device in `squeezeslave -L | sed -e 1d -e 's/.*Audio) //' -e 's/ ([0-9]*\/[0-9]*)$//'`
+do
+if [ -z $device ]
+then
+echo try again
+else
+echo $device
+break
+fi
+done
+unset IFS
+export USEPADEVICE=$device
+export USEPAMAXSAMPLERATE=$rate
+open -a SqueezePlay

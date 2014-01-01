@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+raise "Usage: fdiff file1 file2\nto see which lines in file2 do not exist in file 1" unless ARGV.length == 2
+
+ARGV.each {|f| raise "File does not exist: #{f}" unless File.exist? f }
+
+def load(file)
+  File.readlines(file).collect {|l| l.chomp}
+end
+
+file1 = load ARGV[0]
+file2 = load ARGV[1]
+
+file2.each do |line|
+  puts line unless file1.include? line
+end

@@ -1,0 +1,46 @@
+#!/usr/bin/ruby
+
+nums = Array.new
+
+while gets
+  break if $_.nil? || $_.strip.empty?
+  
+  nums.push $_.to_f
+end
+
+nums.sort! {|a, b| a <=> b}
+
+def calc_mean(nums)
+  total = nums.inject(nil) {|sum, num| sum ? sum + num.to_f : num.to_f }
+  total / nums.length
+end
+
+def calc_median(sorted_nums)
+  len = sorted_nums.length
+  if len % 2 == 0
+    lower = sorted_nums[len / 2]
+    upper = sorted_nums[(len / 2) + 1]
+    return (lower + upper) / 2
+  else
+    return sorted_nums[(len + 1) / 2]
+  end
+end
+
+
+
+lowest = nums.first
+highest = nums.last
+mean = calc_mean(nums)
+median = calc_median(nums)
+count = nums.length
+
+def print_metric(label, number)
+  printf("%15s %-1.3f seconds\n", label, number)  
+end
+
+puts "#{count} records:"
+print_metric("Median:", median)
+print_metric("Mean:", mean)
+print_metric("Lowest:", lowest)
+print_metric("Highest:", highest)
+puts

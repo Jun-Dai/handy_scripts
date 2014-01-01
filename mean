@@ -1,0 +1,12 @@
+#!/usr/bin/ruby
+
+nums = Array.new
+
+while gets
+  break if $_.nil? || $_.strip.empty?
+  nums.push $_
+end
+
+total = nums.inject(nil) {|sum, num| sum ? sum + num.to_f : num.to_f }
+
+puts total / nums.length

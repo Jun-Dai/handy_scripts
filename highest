@@ -1,0 +1,12 @@
+#!/usr/bin/ruby
+
+nums = Array.new
+
+while gets
+  break if $_.nil? || $_.strip.empty?
+  nums.push $_
+end
+
+nums.sort! {|a, b| a.to_f <=> b.to_f}
+
+puts nums.last
